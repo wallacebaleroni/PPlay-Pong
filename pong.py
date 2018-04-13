@@ -38,6 +38,9 @@ def main():
 
     keyboard = Keyboard()
 
+    # ALTERACAO PRO EXERCICIO
+    contador = 0
+
     while True:
         if keyboard.key_pressed("w"):
             if left_paddle.y >= 0:
@@ -55,27 +58,58 @@ def main():
 
         ball.set_position(ball.x + ball_speed_x, ball.y + ball_speed_y)
 
-        if left_paddle.collided(ball) | right_paddle.collided(ball):
-            ball_speed_x = 0 - ball_speed_x
-            if (ball.y + BALL_SIZE_Y / 2 > left_paddle.y + PADDLE_SIZE_Y / 2) \
-                    | (ball.y + BALL_SIZE_Y / 2 > right_paddle.y + PADDLE_SIZE_Y / 2):
-                ball_speed_y = abs(ball_speed_y)
-            else:
-                ball_speed_y = 0 - abs(ball_speed_y)
+        # PONG NORMAL
+        #if left_paddle.collided(ball) | right_paddle.collided(ball):
+        #    ball_speed_x = 0 - ball_speed_x
+        #    if (ball.y + BALL_SIZE_Y / 2 > left_paddle.y + PADDLE_SIZE_Y / 2) \
+        #            | (ball.y + BALL_SIZE_Y / 2 > right_paddle.y + PADDLE_SIZE_Y / 2):
+        #        ball_speed_y = abs(ball_speed_y)
+        #    else:
+        #        ball_speed_y = 0 - abs(ball_speed_y)
 
         # Colisao na parede esquerda
         if ball.x <= 0:
-            player_2 += 1
-            print(player_1, player_2)
-            ball.set_position(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2)
+            # ALTERACAO DE EXERCICIO
+            contador += 1
+            if contador % 2 == 0 and ball_speed_x <= WINDOW_SIZE_X * 0.05 and ball_speed_y <= WINDOW_SIZE_Y * 0.05:
+                if ball_speed_x >= 0:
+                    ball_speed_x += 0.1
+                else:
+                    ball_speed_x -= 0.1
+                print(ball_speed_x, ball_speed_y)
+            ball_speed_x = - ball_speed_x
+            # PONG NORMAL:
+            #player_2 += 1
+            #print(player_1, player_2)
+            #ball.set_position(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2)
         # Colisao na parede direita
         if ball.x >= WINDOW_SIZE_X:
-            player_1 += 1
-            print(player_1, player_2)
-            ball.set_position(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2)
+            # ALTERACAO DE EXERCICIO
+            contador += 1
+            if contador % 2 == 0 and ball_speed_x <= WINDOW_SIZE_X * 0.05 and ball_speed_y <= WINDOW_SIZE_Y * 0.05:
+                if ball_speed_x >= 0:
+                    ball_speed_x += 0.1
+                else:
+                    ball_speed_x -= 0.1
+                print(ball_speed_x, ball_speed_y)
+            ball_speed_x = - ball_speed_x
+            # PONG NORMAL:
+            #player_1 += 1
+            #print(player_1, player_2)
+            #ball.set_position(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2)
         # Colisao na parede superior e inferior
         if (ball.y <= 0) | (ball.y + BALL_SIZE_Y / 2 >= WINDOW_SIZE_Y):
-            ball_speed_y = 0 - ball_speed_y
+            # ALTERACAO DE EXERCICIO
+            contador += 1
+            if contador % 2 == 0 and ball_speed_x <= WINDOW_SIZE_X * 0.05 and ball_speed_y <= WINDOW_SIZE_Y * 0.05:
+                if ball_speed_y >= 0:
+                    ball_speed_y += 0.1
+                else:
+                    ball_speed_y -= 0.1
+                print(ball_speed_x, ball_speed_y)
+            ball_speed_y = - ball_speed_y
+            # PONG NORMAL
+            # ball_speed_y = 0 - ball_speed_y
 
         janela.set_background_color((0, 0, 0))
         left_paddle.draw()
